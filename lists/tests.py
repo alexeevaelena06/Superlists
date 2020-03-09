@@ -46,3 +46,8 @@ class HomePageTest(TestCase):
         self.assertEqual(new_item.text, 'A new list item')
         self.assertIn('A new list item', response.content.decode())
         self.assertTemplateUsed(response, 'home.html')
+
+    def test_only_saves_items_when_necessary(self):
+        """тест: сохраняет элементы, только когда нужно"""
+        self.client.get('/')
+        self.assertEqual(Item.objects.count(), 0)
