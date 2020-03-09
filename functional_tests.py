@@ -41,6 +41,10 @@ class NewVisitorTest(unittest.TestCase):
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
         self.assertIn('1: Купить павлиньи перья', [row.text for row in rows])
+        self.assertIn(
+            '2: Сделать мушку из павлиньих перьев',
+            [row.text for row in rows]
+        )
 
         # Текстовое поле по-прежнему приглашает ее добавить ещё один элемент.
         # Она вводит "Cделать мушку из павлиньих перьев" (Эдит очень методична)
