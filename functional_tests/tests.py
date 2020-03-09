@@ -43,7 +43,7 @@ class NewVisitorTest(LiveServerTestCase):
         # Когда она нажимает enter, страница обновляется, и теперь страница содержит "1: Купить павлинь перья" в
         # качестве элемента списка.
         inputbox.send_keys(Keys.ENTER)
-        time.sleep(10)
+        time.sleep(1)
         self.check_for_row_in_list_table('1: Купить павлиньи перья')
 
         # Текстовое поле по-прежнему приглашает ее добавить ещё один элемент.
