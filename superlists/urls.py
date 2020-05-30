@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """superlists URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -18,5 +20,6 @@ from lists import views
 
 urlpatterns = [
     url(r'^$', views.home_page, name='home'),
-    url(r'^lists/единственный-в-своем-роде-список-в-мире/$', views.view_list, name='view_list')
+    url(r'^lists/единственный-в-своем-роде-список-в-мире/$', views.view_list, name='view_list'),
+    url(r'^lists/единственный-список-в-мире/$', views.view_list, name='view_list'),
 ]
