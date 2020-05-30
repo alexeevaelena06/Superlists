@@ -7,7 +7,7 @@ from lists.models import Item
 from lists.views import home_page
 
 
-class ItemModelTEst(TestCase):
+class ItemModelTest(TestCase):
     """тест модели элемента списка"""
 
     def test_saving_and_retrieving_items(self):
@@ -47,7 +47,7 @@ class HomePageTest(TestCase):
     def test_redirects_after_POST(self):
         response = self.client.post('/', data={'item_text': 'A new list item'})
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response['location'], '/')
+        self.assertEqual(response['location'], '/lists/единственный-в-своем-роде-список-в-мире/')
 
     def test_only_saves_items_when_necessary(self):
         """тест: сохраняет элементы, только когда нужно"""
@@ -63,3 +63,17 @@ class HomePageTest(TestCase):
 
         self.assertIn('itemey 1', response.content.decode())
         self.assertIn('itemey 2', response.content.decode())
+
+
+class ListViewTest(TestCase):
+    """тест представления списка"""
+
+    def test_displays_all_items(self):
+        """тест: отображаются все элементы списка"""
+        Item.objects.create(text='itemey 1')
+        Item.objects.create(text='itemey 2')
+
+        response = self.client.get('/lists/единственный-в-своем-роде-список-в-мире/')
+
+        self.assertContains(response, 'itemey 1')
+        self.assertContains(response, 'itemey 2')

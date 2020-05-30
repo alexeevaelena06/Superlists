@@ -18,4 +18,5 @@ from lists import views
 
 urlpatterns = [
     url(r'^$', views.home_page, name='home'),
+    url(r'^lists/единственный-в-своем-роде-список-в-мире/$', views.view_list, name='view_list')
 ]
