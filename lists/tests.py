@@ -69,23 +69,28 @@ class ListViewTest(TestCase):
     """тест представления списка"""
     def test_uses_list_template(self):
         """тест: используется шаблон списка"""
-        response = self.client.get('/lists/единственный-в-своем-роде-список-в-мире/')
+        list_ = List.objects.create()
+        response = self.client.get(f'/lists/{list_.id}/')
         self.assertTemplateUsed(response, 'list.html')
 
-    def test_displays_all_items(self):
-        """тест: отображаются все элементы списка"""
-        list_ = List.objects.create()
-        Item.objects.create(text='itemey 1', list=list_)
-        Item.objects.create(text='itemey 2', list=list_)
+    def test_displays_only_items_for_that_list(self):
+        """тест: отображаются элементы только для этого списка"""
+        correct_list = List.objects.create()
+        Item.objects.create(text='itemey 1', list=correct_list)
+        Item.objects.create(text='itemey 2', list=correct_list)
+        other_list = List.objects.create()
+        Item.objects.create(text='другой элемент 1 списка', list=other_list)
+        Item.objects.create(text='другой элемент 2 списка', list=other_list)
 
-        response = self.client.get('/lists/единственный-в-своем-роде-список-в-мире/')
+        response = self.client.get(f'/lists/{correct_list.id}/')
 
         self.assertContains(response, 'itemey 1')
         self.assertContains(response, 'itemey 2')
+        self.assertNotContains(response, 'другой элемент 1 списка')
+        self.assertNotContains(response, 'другой элемент 2 списка')
 
 
 class NewListTest(TestCase):
-
     """тест нового списка"""
 
     def test_can_save_a_POST_request(self):
